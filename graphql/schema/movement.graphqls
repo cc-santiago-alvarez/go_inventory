@@ -1,0 +1,32 @@
+enum MovementType {
+  entry
+  exit
+}
+
+type Movement {
+  id: ID!
+  product: ProductCategory!
+  type: MovementType!
+  quantity: Int!
+  reason: String!
+  date: String!
+  created_at: String!
+}
+
+input CreateMovementInput {
+  product_id: String!
+  type: MovementType!
+  quantity: Int!
+  reason: String!
+}
+
+extend type Query {
+  movements: [Movement!]!
+  movementsByProduct(productId: ID!): [Movement!]!
+  movementsByType(type: MovementType!): [Movement!]!
+  movementsByDateRange(from: String!, to: String!): [Movement!]!
+}
+
+extend type Mutation {
+  createMovement(input: CreateMovementInput!): Movement!
+}
