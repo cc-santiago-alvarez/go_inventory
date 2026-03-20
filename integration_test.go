@@ -78,11 +78,11 @@ func TestCreateProduct(t *testing.T) {
 		if product.Price != 29.99 {
 			t.Errorf("Se esperaba precio 29.99, se obtuvo %f", product.Price)
 		}
-		if product.CategoryID != category.ID {
-			t.Errorf("Se esperaba category_id '%s', se obtuvo '%s'", category.ID, product.CategoryID)
+		if product.Category.ID != category.ID {
+			t.Errorf("Se esperaba category_id '%s', se obtuvo '%s'", category.ID, product.Category.ID)
 		}
 
-		t.Logf("Producto creado con ID: %s, asociado a categoría: %s", product.ID, product.CategoryID)
+		t.Logf("Producto creado con ID: %s, asociado a categoría: %s", product.ID, product.Category.ID)
 	})
 
 	t.Run("error al crear producto sin nombre", func(t *testing.T) {
@@ -171,8 +171,8 @@ func TestCategoryProductRelationship(t *testing.T) {
 		productNames := map[string]bool{}
 		for _, p := range catWithProducts.Products {
 			productNames[p.Name] = true
-			if p.CategoryID != catElectronica.ID {
-				t.Errorf("Producto '%s' tiene category_id '%s', se esperaba '%s'", p.Name, p.CategoryID, catElectronica.ID)
+			if p.Category.ID != catElectronica.ID {
+				t.Errorf("Producto '%s' tiene category_id '%s', se esperaba '%s'", p.Name, p.Category.ID, catElectronica.ID)
 			}
 		}
 
@@ -208,24 +208,24 @@ func TestCategoryProductRelationship(t *testing.T) {
 		if err != nil {
 			t.Fatalf("Error al buscar Laptop: %v", err)
 		}
-		if foundLaptop.CategoryID != catElectronica.ID {
-			t.Errorf("Laptop debería pertenecer a Electrónica (%s), pero tiene category_id '%s'", catElectronica.ID, foundLaptop.CategoryID)
+		if foundLaptop.Category.ID != catElectronica.ID {
+			t.Errorf("Laptop debería pertenecer a Electrónica (%s), pero tiene category_id '%s'", catElectronica.ID, foundLaptop.Category.ID)
 		}
 
 		foundMouse, err := productService.FindProductById(ctx, mouse.ID)
 		if err != nil {
 			t.Fatalf("Error al buscar Mouse: %v", err)
 		}
-		if foundMouse.CategoryID != catElectronica.ID {
-			t.Errorf("Mouse debería pertenecer a Electrónica (%s), pero tiene category_id '%s'", catElectronica.ID, foundMouse.CategoryID)
+		if foundMouse.Category.ID != catElectronica.ID {
+			t.Errorf("Mouse debería pertenecer a Electrónica (%s), pero tiene category_id '%s'", catElectronica.ID, foundMouse.Category.ID)
 		}
 
 		foundArroz, err := productService.FindProductById(ctx, arroz.ID)
 		if err != nil {
 			t.Fatalf("Error al buscar Arroz: %v", err)
 		}
-		if foundArroz.CategoryID != catAlimentos.ID {
-			t.Errorf("Arroz debería pertenecer a Alimentos (%s), pero tiene category_id '%s'", catAlimentos.ID, foundArroz.CategoryID)
+		if foundArroz.Category.ID != catAlimentos.ID {
+			t.Errorf("Arroz debería pertenecer a Alimentos (%s), pero tiene category_id '%s'", catAlimentos.ID, foundArroz.Category.ID)
 		}
 
 		t.Log("Todos los productos tienen el category_id correcto")

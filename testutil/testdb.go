@@ -19,6 +19,7 @@ DROP TABLE IF EXISTS categories;
 CREATE TABLE categories (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     name VARCHAR(255) NOT NULL UNIQUE,
+    prefix VARCHAR(10) NOT NULL,
     description VARCHAR(255),
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
@@ -26,6 +27,7 @@ CREATE TABLE categories (
 
 CREATE TABLE products (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    code VARCHAR(20) NOT NULL,
     name VARCHAR(255) NOT NULL,
     description VARCHAR(255),
     price DECIMAL(10, 2) NOT NULL,
